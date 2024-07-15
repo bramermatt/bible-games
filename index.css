@@ -171,6 +171,8 @@ button.disabled:hover {
         .header-title {
             left: 0;
             /* bottom: 70vh; */
+            position: relative;
+            bottom: 0;
             padding: 20px;
 
             h1 {

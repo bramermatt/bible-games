@@ -22,12 +22,11 @@ nav {
     justify-content: space-between;
     gap: 1vw;
     align-items: center;
-    
-    padding: 10px 0 10px 0;
-    padding-inline: 25px;
+    /* padding-inline: 25px; */
 
     position: sticky;
     top:0;
+    padding: 10px 0;
     width: 100%;
     z-index: 10;
     filter: drop-shadow(0px 0px 2px black);
@@ -41,104 +40,13 @@ nav {
         justify-content: space-between;
         gap: 2vw;
         align-items: center;
+        padding-inline: 25px;
 
         h1 {
             margin: 0;
         }
     }
 }
-
-.foot-nav {
-    display: block;
-    position: fixed;
-    bottom: 10px;
-    width: -webkit-fill-available;
-    max-width: max-content;
-    border-radius: 10px;
-    box-shadow: 0px 0px 2px grey;
-    margin-inline: 10px;
-
-    i {
-        font-size: 22px;
-    }
-
-    ul {
-        display: flex;
-        flex-direction: column;
-        gap: 2vh;
-        justify-content: space-between;
-        list-style-type: none;
-        margin-inline: 10px;
-        padding: 0;
-
-        li a {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        a:hover {
-            opacity: 80%;
-        }
-
-        a:link, a:visited {
-            /* color: white; */
-            text-decoration: none;
-        }
-    }
-
-}
-
-@media screen and (max-width: 700px) {
-    
-    .foot-nav {
-        display: block;
-        position: fixed;
-        bottom: 10px;
-        width: -webkit-fill-available;
-        max-width: 1000px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 2px grey;
-        margin-inline: 10px;
-    
-        i {
-            font-size: 22px;
-        }
-    
-        ul {
-            display: flex;
-            flex-direction: row;
-            gap: 1vw;
-            justify-content: space-between;
-            list-style-type: none;
-            margin-inline: 25px;
-            padding: 0;
-    
-            li a {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-    
-            a:hover {
-                opacity: 80%;
-            }
-    
-            a:link, a:visited {
-                /* color: white; */
-                text-decoration: none;
-            }
-        }
-    
-    }
-
-}
-
-
-
-
 
 
 header {
@@ -417,7 +325,6 @@ button.disabled:hover {
 
     .quiz-container, #correctAnswersSection {
         margin-inline: 15px;
-        margin-bottom: 20vh;
     }
     
     header {
@@ -453,19 +360,17 @@ button.disabled:hover {
 }
 
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 400px) {
 
     .quiz-container {
         padding: 10px;
         margin: 0;
         box-shadow: none;
         border-radius: 0;
-
-
     }
 
-    #choices {
-        grid-template-columns: 1fr;
+    #choices .choices {
+        flex-direction: column;
     }
 
 
@@ -475,14 +380,6 @@ button.disabled:hover {
 
     .nav-title, .header-title, .modal button {
         color: white;
-    }
-
-    .foot-nav {
-        background-color: white;
-    }
-
-    .foot-nav ul li a:link, li a:visited {
-        color: black;
     }
 
     nav {
@@ -507,12 +404,8 @@ button.disabled:hover {
 
 @media screen and (prefers-color-scheme: dark) {
     
-    nav, body, .foot-nav {
+    nav, body {
         background-color: rgb(0,0,0);
-    }
-
-    .foot-nav ul li a:link, li a:visited {
-        color: rgb(255, 255, 255);
     }
 
     .quiz-container, #correctAnswersSection {

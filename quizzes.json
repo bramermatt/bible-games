@@ -1,0 +1,62 @@
+[
+    {
+        "question": "What is the first book of the Bible?",
+        "choices": ["Exodus", "Genesis", "Leviticus", "Numbers"],
+        "topic": "Book",
+        "correct": 1
+    },
+    {
+        "question": "Who built the ark?",
+        "choices": ["Moses", "Noah", "Abraham", "Jacob"],
+        "topic": "Person",
+        "correct": 1
+    },
+    {
+        "question": "What is the longest book in the Bible?",
+        "choices": ["Genesis", "Psalms", "Isaiah", "Matthew"],
+        "topic": "Book",
+        "correct": 1
+    },
+    {
+        "question": "Who was swallowed by a big fish?",
+        "choices": ["Elijah", "Jonah", "Daniel", "Peter"],
+        "topic": "Event",
+        "correct": 1
+    },
+    {
+        "question": "Where was Jesus born?",
+        "choices": ["Nazareth", "Jerusalem", "Bethlehem", "Galilee"],
+        "topic": "Place",
+        "correct": 2
+    },
+    {
+        "question": "Who was the first king of Israel?",
+        "choices": ["David", "Solomon", "Saul", "Samuel"],
+        "topic": "Person",
+        "correct": 2
+    },
+    {
+        "question": "What is the shortest book in the New Testament?",
+        "choices": ["Philemon", "2 John", "3 John", "Jude"],
+        "topic": "Book",
+        "correct": 1
+    },
+    {
+        "question": "Who led the Israelites out of Egypt?",
+        "choices": ["Joshua", "Aaron", "Moses", "Joseph"],
+        "topic": "Person",
+        "correct": 2
+    },
+    {
+        "question": "Which of these is not a Gospel?",
+        "choices": ["Matthew", "Mark", "Luke", "Acts"],
+        "topic": "Book",
+        "correct": 3
+    },
+    {
+        "question": "Who denied Jesus three times?",
+        "choices": ["Judas", "Peter", "John", "Thomas"],
+        "topic": "Person",
+        "correct": 1
+    }
+]

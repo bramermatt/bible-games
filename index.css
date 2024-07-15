@@ -98,14 +98,28 @@ footer {
     bottom: 0;
 }
 
-/* .correct {
-    background-color: green;
-    color: white;
+.correct-answer {
+    background-color: rgb(57, 114, 57);
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 3px;
+    margin-bottom: 5px;
 }
-.incorrect {
-    background-color: red;
-    color: white;
-} */
+
+.incorrect-answer {
+    background-color: rgb(97, 15, 15);
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.completed-answer {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 .quiz-container {
     max-width: 600px;
     margin: auto;
@@ -235,6 +249,12 @@ button.disabled:hover {
     align-items: center;
     flex-direction: column;
 }
+
+.modal-content p {
+    font-size: 20px;
+}
+
+
 .modal button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -270,6 +290,10 @@ button.disabled:hover {
     border-radius: 8px;        /* Rounded corners */
     margin-top: 20px;          /* Space from other elements */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+
+    h2 {
+        margin: 0;
+    }
 }
 
 /* Styles for the list of correct answers */
@@ -280,8 +304,9 @@ button.disabled:hover {
 
 #correctAnswersList li {
     padding: 10px;
-    border-bottom: 1px solid #ddd; /* Divider between list items */
-    font-size: 16px; /* Adjust font size */
+    /* border-bottom: 1px solid #ddd; */
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 #correctAnswersList li:last-child {
@@ -362,6 +387,10 @@ button.disabled:hover {
         border: thin solid;
         color: black !important;
     }
+
+    #choices li button {
+        color: black !important;
+    }
     
 }
 
@@ -374,6 +403,10 @@ button.disabled:hover {
     .quiz-container, #correctAnswersSection {
         background-color: rgb(10,10,10);
         box-shadow: 0px 0px 3px rgb(84, 84, 84);
+    }
+
+    #choices li button {
+        color: white !important;
     }
 
 

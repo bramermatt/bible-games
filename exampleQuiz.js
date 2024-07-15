@@ -62,7 +62,6 @@ const quizzes = [
     // Add more quiz objects here
 ];
 
-
 let currentQuestionIndex = 0;
 let score = 0;
 let answersCorrect = [];
@@ -79,6 +78,7 @@ function loadQuestion(index) {
     const incorrectModal = document.getElementById('incorrectModal');
     const questionCounter = document.getElementById('questionCounter');
     const topicElement = document.getElementById('topic');
+    const questionSection = document.querySelector('.question-section');
 
     // Clear previous choices
     choicesElement.innerHTML = '';
@@ -103,9 +103,8 @@ function loadQuestion(index) {
         choicesElement.appendChild(li);
     });
 
-    // Hide the next, retry buttons, show answers button and complete message
+    // Hide the next button and complete message initially
     nextButton.style.display = 'none';
-    nextButton.disabled = true;
     retryButton.style.display = 'none';
     showAnswersButton.style.display = 'none'; // Hide show answers button initially
     completeMessage.style.display = 'none';
@@ -114,18 +113,15 @@ function loadQuestion(index) {
     correctModal.style.display = 'none';
     incorrectModal.style.display = 'none';
 
-    // Hide the score initially
-    if (index === 0) {
-        scoreElement.classList.add('hidden');
-    }
+    // Show the question section
+    questionSection.style.display = 'block';
 }
+
 
 function checkAnswer(button, isCorrect) {
     const nextButton = document.getElementById('nextButton');
     const showAnswersButton = document.getElementById('showAnswersButton');
-    const quizContainer = document.querySelector('.question-section');
-    const retryButton = document.getElementById('retryButton');
-    
+
     if (isCorrect) {
         button.classList.add('correct');
         button.classList.add('correct-hover');
@@ -135,7 +131,7 @@ function checkAnswer(button, isCorrect) {
     } else {
         button.classList.add('incorrect');
         button.classList.add('incorrect-hover');
-        showIncorrectModal();
+        showIncorrectModal(quizzes[currentQuestionIndex].choices[quizzes[currentQuestionIndex].correct]);
         answersCorrect[currentQuestionIndex] = false;
     }
     updateScore();
@@ -147,17 +143,18 @@ function checkAnswer(button, isCorrect) {
     // Hide the next button when a modal is shown
     nextButton.classList.add('hidden');
 
-    // Show the next button if more questions are available, otherwise hide the question section and show complete options
+    // Show the next button if more questions are available, otherwise show the complete message
     if (currentQuestionIndex < quizzes.length - 1) {
         nextButton.style.display = 'block';
         nextButton.disabled = false;
     } else {
-        // Hide question section and show retry and show answers buttons
-        quizContainer.style.display = 'none'; // Hide the question section
         const completeMessage = document.getElementById('completeMessage');
+        const retryButton = document.getElementById('retryButton');
         completeMessage.style.display = 'block';
+        retryButton.style.display = 'block';
         showAnswersButton.style.display = 'block'; // Show the show answers button
-        retryButton.style.display = 'block'; // Show the retry button
+        const questionSection = document.querySelector('.question-section');
+        questionSection.style.display = 'none'; // Hide the question section after quiz completion
     }
 }
 
@@ -177,6 +174,7 @@ function updateScore() {
     }
 }
 
+// Update the retryQuiz function
 function retryQuiz() {
     currentQuestionIndex = 0;
     score = 0;
@@ -195,14 +193,23 @@ function retryQuiz() {
     nextRetryCorrectDiv.style.display = 'flex'; // Show the buttons after retrying
 }
 
-
 function showCorrectModal() {
     const correctModal = document.getElementById('correctModal');
     correctModal.style.display = 'flex';
 }
 
-function showIncorrectModal() {
+function showIncorrectModal(correctAnswer) {
     const incorrectModal = document.getElementById('incorrectModal');
+    const modalContent = document.querySelector('#incorrectModal .modal-content');
+    
+    // Update the modal content with more information
+    modalContent.innerHTML = `
+        <p class="incorrect-message">Wrong Answer! 
+        The correct answer is: <strong style='color: red;'>${correctAnswer}</strong></p>
+        <button onclick="handleModalButtonClick()">Next Question</button>
+        `;
+    
+    // Display the modal
     incorrectModal.style.display = 'flex';
 }
 
@@ -221,10 +228,11 @@ function handleModalButtonClick() {
     loadNextQuestion();
 }
 
-// Toggle the visibility of the correct answers section
+// Update the toggleCorrectAnswers function
 function toggleCorrectAnswers() {
     const correctAnswersSection = document.getElementById('correctAnswersSection');
     const nextRetryCorrectDiv = document.querySelector('.next-retry-correct');
+    const showAnswersButton = document.getElementById('showAnswersButton');
 
     if (correctAnswersSection.style.display === 'none') {
         displayCorrectAnswers();
@@ -236,6 +244,7 @@ function toggleCorrectAnswers() {
     }
 }
 
+
 // Show correct answers in the designated section
 function displayCorrectAnswers() {
     const correctAnswersList = document.getElementById('correctAnswersList');
@@ -244,10 +253,21 @@ function displayCorrectAnswers() {
     quizzes.forEach((quiz, index) => {
         const li = document.createElement('li');
         const text = `${quiz.question} - Correct Answer: ${quiz.choices[quiz.correct]}`;
+
+        // Apply the class based on whether the answer was correct or incorrect
+        if (answersCorrect[index]) {
+            li.classList.add('correct-answer');
+        } else {
+            li.classList.add('incorrect-answer');
+        }
+
         li.textContent = text;
         correctAnswersList.appendChild(li);
     });
 }
+
+
+
 
 
 // Load the first question

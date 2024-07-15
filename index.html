@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <meta name="color-scheme" content="light dark"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="book-bible-solid.svg">
+    
+    <link rel="stylesheet" href="index.css">
+
+    <title>Home | Bible Games</title>
+</head>
+<body>
+
+    <nav>
+        <!-- <i class="fa-solid fa-bars"></i> -->
+        
+        <div class="nav-title">
+            <i class="fa-solid fa-book-bible"></i>
+            <h1>Bible Games</h1>
+        </div>
+
+    </nav>
+
+    <header>
+        <img src="bible-hero.jpeg" alt="">
+
+        <div class="header-title">
+            <h1>Welcome to Bible Games!</h1>
+            <p>It's time to test your knowledge of Bible Trivia! <em>Characters</em>, <em>Books of the Bible</em>, <em>Places</em>, and so much more!</p>
+        </div>
+    </header>
+
+    <div class="quiz-container">
+        <h1>Bible Quiz</h1>
+        <div class="question" id="question"></div>
+        <ul class="choices" id="choices"></ul>
+        <button id="nextButton" onclick="loadNextQuestion()" style="display: none;">Next Question</button>
+        <button id="retryButton" onclick="retryQuiz()" style="display: none;">Retry Quiz</button>
+        
+        <div id="completeMessage" style="display: none;">You have completed the quiz!</div>
+        <div id="score" class="hidden">Score: </div>
+    </div>
+    
+
+    <script src="exampleQuiz.js"></script>
+
+    <!-- <main>
+        <button>Start Game</button>
+    </main> -->
+    
+</body>
+</html>

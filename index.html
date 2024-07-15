@@ -35,26 +35,49 @@
         </div>
     </header>
 
+
+    <!-- <h1>Example Quizzes</h1> -->
     <div class="quiz-container">
         <h1>Example Quizzes</h1>
-        <div class="question" id="question"></div>
-        <ul class="choices" id="choices"></ul>
-        <button id="nextButton" onclick="loadNextQuestion()" style="display: none;">Next Question</button>
-        <button id="retryButton" onclick="retryQuiz()" style="display: none;">Retry Quiz</button>
-        <div id="completeMessage" style="display: none;">You have completed the quiz!</div>
-        <div id="score" class="hidden">Score: 0</div>
-    </div>
 
-    <!-- Correct Answer Modal -->
+        <div style="display: flex; gap: 3vw; margin-bottom: 25px;">
+            <div id="questionCounter" class="question-counter"></div>
+            <div id="score" class="hidden"></div>
+        </div>
+
+
+        <div id="topic" class="topic"></div>
+        <div id="question" class="question"></div>
+        <ul id="choices" class="choices"></ul>
+
+        <div style="display: flex; gap: 3vw;">
+            <button id="nextButton" onclick="loadNextQuestion()">Next Question</button>
+            <button id="retryButton" onclick="retryQuiz()">Retry Quiz</button>
+            <button id="showAnswersButton" onclick="toggleCorrectAnswers()" style="display: none;">Show Correct Answers</button>
+        </div>
+
+        <div id="completeMessage">Quiz Complete!</div>
+
+
+
+    </div>
     <div id="correctModal" class="modal">
-        <p id="correctModalMessage">Correct answer!</p>
-        <button onclick="handleModalButtonClick()">Next Question</button>
+        <div class="modal-content">
+            <p>Correct Answer!</p>
+            <button onclick="handleModalButtonClick()">Next Question</button>
+        </div>
+    </div>
+    <div id="incorrectModal" class="modal">
+        <div class="modal-content">
+            <p>Wrong Answer!</p>
+            <button onclick="handleModalButtonClick()">Next Question</button>
+        </div>
     </div>
 
-    <!-- Incorrect Answer Modal -->
-    <div id="incorrectModal" class="modal">
-        <p id="incorrectModalMessage">Incorrect answer.</p>
-        <button onclick="handleModalButtonClick()">Next Question</button>
+    <!-- New section for correct answers -->
+    <div id="correctAnswersSection" style="display: none;">
+        <h2>Correct Answers</h2>
+        <ul id="correctAnswersList"></ul>
     </div>
     
 

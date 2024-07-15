@@ -123,6 +123,9 @@ function loadQuestion(index) {
 function checkAnswer(button, isCorrect) {
     const nextButton = document.getElementById('nextButton');
     const showAnswersButton = document.getElementById('showAnswersButton');
+    const quizContainer = document.querySelector('.question-section');
+    const retryButton = document.getElementById('retryButton');
+    
     if (isCorrect) {
         button.classList.add('correct');
         button.classList.add('correct-hover');
@@ -144,16 +147,17 @@ function checkAnswer(button, isCorrect) {
     // Hide the next button when a modal is shown
     nextButton.classList.add('hidden');
 
-    // Show the next button if more questions are available, otherwise show the complete message
+    // Show the next button if more questions are available, otherwise hide the question section and show complete options
     if (currentQuestionIndex < quizzes.length - 1) {
         nextButton.style.display = 'block';
         nextButton.disabled = false;
     } else {
+        // Hide question section and show retry and show answers buttons
+        quizContainer.style.display = 'none'; // Hide the question section
         const completeMessage = document.getElementById('completeMessage');
-        const retryButton = document.getElementById('retryButton');
         completeMessage.style.display = 'block';
-        retryButton.style.display = 'block';
         showAnswersButton.style.display = 'block'; // Show the show answers button
+        retryButton.style.display = 'block'; // Show the retry button
     }
 }
 
@@ -179,7 +183,18 @@ function retryQuiz() {
     answersCorrect = [];
     updateScore();
     loadQuestion(currentQuestionIndex);
+
+    // Show the question section and hide the correct answers section
+    const quizContainer = document.querySelector('.question-section');
+    const correctAnswersSection = document.getElementById('correctAnswersSection');
+    quizContainer.style.display = 'block';
+    correctAnswersSection.style.display = 'none';
+
+    // Show the retry button and show answers button after quiz is retried
+    const nextRetryCorrectDiv = document.querySelector('.next-retry-correct');
+    nextRetryCorrectDiv.style.display = 'flex'; // Show the buttons after retrying
 }
+
 
 function showCorrectModal() {
     const correctModal = document.getElementById('correctModal');
@@ -209,11 +224,15 @@ function handleModalButtonClick() {
 // Toggle the visibility of the correct answers section
 function toggleCorrectAnswers() {
     const correctAnswersSection = document.getElementById('correctAnswersSection');
-    const isVisible = correctAnswersSection.style.display === 'block';
-    correctAnswersSection.style.display = isVisible ? 'none' : 'block';
+    const nextRetryCorrectDiv = document.querySelector('.next-retry-correct');
 
-    if (!isVisible) {
+    if (correctAnswersSection.style.display === 'none') {
         displayCorrectAnswers();
+        correctAnswersSection.style.display = 'block';
+        showAnswersButton.style.display = 'none'; 
+    } else {
+        correctAnswersSection.style.display = 'none';
+        nextRetryCorrectDiv.style.display = 'flex'; // Show the buttons when hiding correct answers
     }
 }
 

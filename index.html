@@ -46,11 +46,13 @@
         </div>
 
 
-        <div id="topic" class="topic"></div>
-        <div id="question" class="question"></div>
-        <ul id="choices" class="choices"></ul>
+        <div class="question-section">
+            <div id="topic" class="topic"></div>
+            <div id="question" class="question"></div>
+            <ul id="choices" class="choices"></ul>
+        </div>
 
-        <div style="display: flex; gap: 3vw;">
+        <div class="next-retry-correct" style="display: flex; gap: 3vw;">
             <button id="nextButton" onclick="loadNextQuestion()">Next Question</button>
             <button id="retryButton" onclick="retryQuiz()">Retry Quiz</button>
             <button id="showAnswersButton" onclick="toggleCorrectAnswers()" style="display: none;">Show Correct Answers</button>

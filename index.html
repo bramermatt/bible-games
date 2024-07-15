@@ -27,7 +27,7 @@
     </nav>
 
     <header>
-        <img src="bible-hero.jpeg" alt="">
+        <!-- <img src="bible-hero.jpeg" alt=""> -->
 
         <div class="header-title">
             <h1>Welcome to Bible Games!</h1>
@@ -36,14 +36,25 @@
     </header>
 
     <div class="quiz-container">
-        <h1>Bible Quiz</h1>
+        <h1>Example Quizzes</h1>
         <div class="question" id="question"></div>
         <ul class="choices" id="choices"></ul>
         <button id="nextButton" onclick="loadNextQuestion()" style="display: none;">Next Question</button>
         <button id="retryButton" onclick="retryQuiz()" style="display: none;">Retry Quiz</button>
-        
         <div id="completeMessage" style="display: none;">You have completed the quiz!</div>
-        <div id="score" class="hidden">Score: </div>
+        <div id="score" class="hidden">Score: 0</div>
+    </div>
+
+    <!-- Correct Answer Modal -->
+    <div id="correctModal" class="modal">
+        <p id="correctModalMessage">Correct answer!</p>
+        <button onclick="handleModalButtonClick()">Next Question</button>
+    </div>
+
+    <!-- Incorrect Answer Modal -->
+    <div id="incorrectModal" class="modal">
+        <p id="incorrectModalMessage">Incorrect answer.</p>
+        <button onclick="handleModalButtonClick()">Next Question</button>
     </div>
     
 
@@ -52,6 +63,10 @@
     <!-- <main>
         <button>Start Game</button>
     </main> -->
+
+    <footer>
+        <p>Matt Bramer</p>
+    </footer>
     
 </body>
 </html>

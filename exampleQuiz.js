@@ -316,6 +316,7 @@ function displayCorrectAnswers() {
     exampleQuizzes.forEach((quiz, index) => {
         const li = document.createElement('li');
         li.innerHTML = `Question: ${quiz.question}<br>Correct Answer: ${quiz.choices[quiz.correct]}`;
+        li.style.color = answersCorrect[index] ? 'white' : 'white';
         li.style.backgroundColor = answersCorrect[index] ? 'rgb(57, 114, 57)' : 'rgb(97, 15, 15)';
         correctAnswersList.appendChild(li);
     });

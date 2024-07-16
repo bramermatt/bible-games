@@ -282,6 +282,7 @@ button {
     justify-content: center;
     /* padding: 10px; */
     border: 1px solid #bebebe52;
+    color: white !important;
     border-radius: 4px;
     /* background-color: #fff; */
     cursor: pointer;
@@ -383,9 +384,10 @@ button.disabled:hover {
 
     padding: 12px;
     /* background-color: #f9f9f9;  */
-    /* border: 1px solid #ddd;     */
+    border: 1px solid #ddd;    
     border-radius: 8px;        /* Rounded corners */
     margin-top: 20px;          /* Space from other elements */
+    margin-bottom: 40px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 
     h2 {

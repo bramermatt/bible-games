@@ -182,9 +182,7 @@ const quizzes = [
     // Add more quiz objects here
 ];
 
-let currentQuestionIndex = 0;
-let score = 0;
-let answersCorrect = [];
+let currentQuestionIndex = 0, score = 0, answersCorrect = [];
 
 // Fisher-Yates shuffle algorithm
 function shuffleArray(array) {
@@ -194,206 +192,150 @@ function shuffleArray(array) {
     }
 }
 
+// Pick 5 random questions from quizzes
+function pickRandomQuestions() {
+    shuffleArray(quizzes);
+    return quizzes.slice(0, 5);
+}
+
+const exampleQuizzes = pickRandomQuestions();
+
 function loadQuestion(index) {
-    const questionElement = document.getElementById('question');
-    const choicesElement = document.getElementById('choices');
-    const nextButton = document.getElementById('nextButton');
-    const retryButton = document.getElementById('retryButton');
-    const showAnswersButton = document.getElementById('showAnswersButton');
-    const completeMessage = document.getElementById('completeMessage');
-    const scoreElement = document.getElementById('score');
-    const correctModal = document.getElementById('correctModal');
-    const incorrectModal = document.getElementById('incorrectModal');
-    const questionCounter = document.getElementById('questionCounter');
-    const topicElement = document.getElementById('topic');
-    const questionSection = document.querySelector('.question-section');
+    const elements = {
+        question: document.getElementById('question'),
+        choices: document.getElementById('choices'),
+        nextButton: document.getElementById('nextButton'),
+        retryButton: document.getElementById('retryButton'),
+        showAnswersButton: document.getElementById('showAnswersButton'),
+        completeMessage: document.getElementById('completeMessage'),
+        score: document.getElementById('score'),
+        correctModal: document.getElementById('correctModal'),
+        incorrectModal: document.getElementById('incorrectModal'),
+        questionCounter: document.getElementById('questionCounter'),
+        topic: document.getElementById('topic'),
+        questionSection: document.querySelector('.question-section')
+    };
 
-    // Clear previous choices
-    choicesElement.innerHTML = '';
+    elements.choices.innerHTML = '';
+    const quiz = exampleQuizzes[index];
+    elements.question.textContent = quiz.question;
+    elements.questionCounter.textContent = `Question: ${index + 1}/${exampleQuizzes.length}`;
+    elements.topic.textContent = `${quiz.topic}`;
 
-    // Load new question
-    const quiz = quizzes[index];
-    questionElement.textContent = quiz.question;
-
-    // Update question counter
-    questionCounter.textContent = `Question: ${index + 1}/${quizzes.length}`;
-
-    // Update topic
-    topicElement.textContent = `${quiz.topic}`;
-
-    // Load new choices
     quiz.choices.forEach((choice, i) => {
         const li = document.createElement('li');
         const button = document.createElement('button');
         button.textContent = choice;
         button.onclick = () => checkAnswer(button, i === quiz.correct);
         li.appendChild(button);
-        choicesElement.appendChild(li);
+        elements.choices.appendChild(li);
     });
 
-    // Hide the next button and complete message initially
-    nextButton.style.display = 'none';
-    retryButton.style.display = 'none';
-    showAnswersButton.style.display = 'none'; // Hide show answers button initially
-    completeMessage.style.display = 'none';
-
-    // Hide the modals
-    correctModal.style.display = 'none';
-    incorrectModal.style.display = 'none';
-
-    // Show the question section
-    questionSection.style.display = 'block';
+    ['nextButton', 'retryButton', 'showAnswersButton', 'completeMessage', 'correctModal', 'incorrectModal']
+        .forEach(id => elements[id].style.display = 'none');
+    elements.questionSection.style.display = 'block';
 }
 
-
 function checkAnswer(button, isCorrect) {
-    const nextButton = document.getElementById('nextButton');
-    const showAnswersButton = document.getElementById('showAnswersButton');
+    const elements = {
+        nextButton: document.getElementById('nextButton'),
+        showAnswersButton: document.getElementById('showAnswersButton')
+    };
 
     if (isCorrect) {
-        button.classList.add('correct');
-        button.classList.add('correct-hover');
+        button.classList.add('correct', 'correct-hover');
         showCorrectModal();
-        score += 1;
+        score++;
         answersCorrect[currentQuestionIndex] = true;
     } else {
-        button.classList.add('incorrect');
-        button.classList.add('incorrect-hover');
-        showIncorrectModal(quizzes[currentQuestionIndex].choices[quizzes[currentQuestionIndex].correct]);
+        button.classList.add('incorrect', 'incorrect-hover');
+        showIncorrectModal(exampleQuizzes[currentQuestionIndex].choices[exampleQuizzes[currentQuestionIndex].correct]);
         answersCorrect[currentQuestionIndex] = false;
     }
     updateScore();
-    
-    // Disable all buttons after an answer is selected
-    const buttons = document.querySelectorAll('#choices button');
-    buttons.forEach(btn => btn.disabled = true);
 
-    // Hide the next button when a modal is shown
-    nextButton.classList.add('hidden');
+    document.querySelectorAll('#choices button').forEach(btn => btn.disabled = true);
+    elements.nextButton.classList.add('hidden');
 
-    // Show the next button if more questions are available, otherwise show the complete message
-    if (currentQuestionIndex < quizzes.length - 1) {
-        nextButton.style.display = 'block';
-        nextButton.disabled = false;
+    if (currentQuestionIndex < exampleQuizzes.length - 1) {
+        elements.nextButton.style.display = 'block';
     } else {
-        const completeMessage = document.getElementById('completeMessage');
-        const retryButton = document.getElementById('retryButton');
-        completeMessage.style.display = 'block';
-        retryButton.style.display = 'block';
-        showAnswersButton.style.display = 'block'; // Show the show answers button
-        const questionSection = document.querySelector('.question-section');
-        questionSection.style.display = 'none'; // Hide the question section after quiz completion
+        document.getElementById('completeMessage').style.display = 'block';
+        document.getElementById('retryButton').style.display = 'block';
+        elements.showAnswersButton.style.display = 'block';
+        document.querySelector('.question-section').style.display = 'none';
     }
 }
 
 function loadNextQuestion() {
     currentQuestionIndex++;
-    if (currentQuestionIndex < quizzes.length) {
-        loadQuestion(currentQuestionIndex);
-    }
+    if (currentQuestionIndex < exampleQuizzes.length) loadQuestion(currentQuestionIndex);
 }
 
 function updateScore() {
     const scoreElement = document.getElementById('score');
-    scoreElement.textContent = `Score: ${score}/${quizzes.length}`;
-    // Show the score after the first question is answered
-    if (scoreElement.classList.contains('hidden')) {
-        scoreElement.classList.remove('hidden');
-    }
+    scoreElement.textContent = `Score: ${score}`;
+    scoreElement.classList.remove('hidden');
 }
 
-// Update the retryQuiz function
 function retryQuiz() {
-    currentQuestionIndex = 0;
-    score = 0;
+    currentQuestionIndex = score = 0;
     answersCorrect = [];
     updateScore();
-    shuffleArray(quizzes); // Shuffle questions before restarting the quiz
+    shuffleArray(exampleQuizzes);
     loadQuestion(currentQuestionIndex);
 
-    // Show the question section and hide the correct answers section
-    const quizContainer = document.querySelector('.question-section');
-    const correctAnswersSection = document.getElementById('correctAnswersSection');
-    quizContainer.style.display = 'block';
-    correctAnswersSection.style.display = 'none';
-
-    // Show the retry button and show answers button after quiz is retried
-    const nextRetryCorrectDiv = document.querySelector('.next-retry-correct');
-    nextRetryCorrectDiv.style.display = 'flex'; // Show the buttons after retrying
+    document.querySelector('.question-section').style.display = 'block';
+    document.getElementById('correctAnswersSection').style.display = 'none';
+    document.querySelector('.next-retry-correct').style.display = 'flex';
 }
 
 function showCorrectModal() {
-    const correctModal = document.getElementById('correctModal');
-    correctModal.style.display = 'flex';
+    document.getElementById('correctModal').style.display = 'flex';
 }
 
 function showIncorrectModal(correctAnswer) {
-    const incorrectModal = document.getElementById('incorrectModal');
     const modalContent = document.querySelector('#incorrectModal .modal-content');
-    
-    // Update the modal content with more information
     modalContent.innerHTML = `
-        <p class="incorrect-message">Wrong Answer! 
-        The correct answer is: <strong style='color: red;'>${correctAnswer}</strong></p>
-        <button onclick="handleModalButtonClick()">Next Question</button>
-        `;
-    
-    // Display the modal
-    incorrectModal.style.display = 'flex';
+        <p class="incorrect-message">Wrong Answer! The correct answer is: <strong style='color: red;'>${correctAnswer}</strong></p>
+        <button onclick="handleModalButtonClick()">Next Question</button>`;
+    document.getElementById('incorrectModal').style.display = 'flex';
 }
 
 function handleModalButtonClick() {
-    const correctModal = document.getElementById('correctModal');
-    const incorrectModal = document.getElementById('incorrectModal');
-    correctModal.style.display = 'none';
-    incorrectModal.style.display = 'none';
-
-    // Show the next button only if there are more questions
-    const nextButton = document.getElementById('nextButton');
-    if (currentQuestionIndex < quizzes.length - 1) {
-        nextButton.classList.remove('hidden');
-    }
-
+    document.getElementById('correctModal').style.display = 'none';
+    document.getElementById('incorrectModal').style.display = 'none';
+    if (currentQuestionIndex < exampleQuizzes.length - 1) document.getElementById('nextButton').classList.remove('hidden');
     loadNextQuestion();
 }
 
-// Display the completed answers with background colors
 function displayCorrectAnswers() {
-    const correctAnswersSection = document.getElementById('correctAnswersSection');
     const correctAnswersList = document.getElementById('correctAnswersList');
     correctAnswersList.innerHTML = '';
 
-    quizzes.forEach((quiz, index) => {
+    exampleQuizzes.forEach((quiz, index) => {
         const li = document.createElement('li');
-        const text = `Question: ${quiz.question}<br>Correct Answer: ${quiz.choices[quiz.correct]}`;
-        li.innerHTML = text;
+        li.innerHTML = `Question: ${quiz.question}<br>Correct Answer: ${quiz.choices[quiz.correct]}`;
         li.style.backgroundColor = answersCorrect[index] ? 'rgb(57, 114, 57)' : 'rgb(97, 15, 15)';
         correctAnswersList.appendChild(li);
     });
-    correctAnswersSection.style.display = 'block'; // Show correct answers section
+    document.getElementById('correctAnswersSection').style.display = 'block';
 }
 
-// Toggle the visibility of the correct answers section
 function toggleCorrectAnswers() {
     const correctAnswersSection = document.getElementById('correctAnswersSection');
     const showAnswersButton = document.getElementById('showAnswersButton');
     const nextRetryCorrectDiv = document.querySelector('.next-retry-correct');
 
-    if (correctAnswersSection.style.display === 'none' || correctAnswersSection.style.display === '') {
+    if (correctAnswersSection.style.display === 'none' || !correctAnswersSection.style.display) {
         displayCorrectAnswers();
-        correctAnswersSection.style.display = 'block';
         showAnswersButton.style.display = 'none';
     } else {
         correctAnswersSection.style.display = 'none';
-        nextRetryCorrectDiv.style.display = 'flex'; // Show the buttons when hiding correct answers
+        nextRetryCorrectDiv.style.display = 'flex';
     }
 }
 
-// Ensure the button calls toggleCorrectAnswers
-// document.getElementById('showAnswersButton').addEventListener('click', toggleCorrectAnswers);
-
-// Initialize the quiz on page load
 document.addEventListener('DOMContentLoaded', () => {
-    shuffleArray(quizzes); // Shuffle questions initially
     loadQuestion(currentQuestionIndex);
 });
